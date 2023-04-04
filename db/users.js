@@ -1,7 +1,12 @@
 var records = [
-    { id: 1, username: 'jack', password: 'secret', displayName: 'Jack', emails: [ { value: 'jack@example.com' } ] }
-  , { id: 2, username: 'jill', password: 'birthday', displayName: 'Jill', emails: [ { value: 'jill@example.com' } ] }
+    // add users here
+    { id: 1, username: 'westcliff', password: 'secret', displayName:
+    'WestCliff', emails: [ { value: 'west@example.com' } ] }
+    , { id: 2, username: 'westcliffclass', password: 'birthday',
+    displayName: 'WestCliff University', emails: [ { value:
+    'cliff@example.com' } ] }
 ];
+
 
 exports.findById = function(id, cb) {
   process.nextTick(function() {
@@ -25,3 +30,6 @@ exports.findByUsername = function(username, cb) {
     return cb(null, null);
   });
 }
+
+
+

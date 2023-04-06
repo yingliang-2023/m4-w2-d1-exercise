@@ -54,11 +54,19 @@ app.use(require('morgan')('combined'));
 app.use(require('body-parser').urlencoded({
   extended: true
 }));
+
 app.use(require('express-session')({
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    maxAge: 60000
+    }
+
 }));
+
+
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
@@ -83,6 +91,7 @@ app.get('/login',
   function (req, res) {
     res.render('login');
   });
+  
 app.post('/login',
   passport.authenticate('local', {
     failureRedirect: '/login'
@@ -93,9 +102,13 @@ app.post('/login',
   
 app.get('/logout',
   function (req, res) {
-    req.logout();
-    res.redirect('/');
+    req.logOut();
+    res.status(200).clearCookie('connect.sid', {
+      path: '/'
+    });
+    req.session.destroy(function (err) {
+      res.redirect('/');
+    });
   });
 
-
-app.listen(3000);
+  app.listen(3000);
